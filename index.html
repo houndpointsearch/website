@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HoundPoint Search</title>
+<meta name="description" content="HoundPoint Search places early-career data, analytics and machine learning talent with venture-backed startups and scale-ups across California. No fee unless you hire.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%231E3A44'/%3E%3Cpath d='M10 21 L16 10 L22 21 Z' fill='%23EE9B45'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Carlito:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: centred serif headlines on warm sand, deep teal bands, poppy accent, scent-trail motif */
+:root{
+  --sand:#f8f2ea; --sand-2:#f1e8dc; --card:#fffdf9;
+  --teal:#1e3a44; --teal-2:#2a4d58; --sage:#9fbcae; --sage-ink:#4f6f62;
+  --poppy:#ee9b45; --poppy-2:#f4b06a; --poppy-ink:#9a5a16;
+  --text:#22313a; --muted:#5d6a70; --line:#e3d9cb;
+  --display:"Young Serif", Georgia, "Times New Roman", serif;
+  --body:"Carlito", Calibri, "Segoe UI", system-ui, sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--sand);color:var(--text);font-family:var(--body);font-size:19px;line-height:1.55}
+a{color:inherit}
+img,svg{max-width:100%}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.1;margin:0;text-wrap:balance}
+h2{font-size:clamp(32px,4.6vw,50px);color:var(--teal)}
+h3{font-size:23px}
+p{margin:0}
+.center{text-align:center}
+.lede{color:var(--muted);max-width:60ch;margin:18px auto 0}
+.pill{display:inline-block;font-family:var(--body);font-weight:700;font-size:17px;text-decoration:none;padding:11px 22px;border-radius:999px;border:1.5px solid transparent;transition:background .15s ease, border-color .15s ease, transform .15s ease}
+.pill:hover{transform:translateY(-1px)}
+.pill-fill{background:var(--poppy);color:var(--teal)}
+.pill-fill:hover{background:var(--poppy-2)}
+.pill-line{border-color:var(--teal);color:var(--teal)}
+.pill-line:hover{background:rgba(30,58,68,.06)}
+.pill-line-light{border-color:rgba(255,255,255,.6);color:#fff}
+.pill-line-light:hover{border-color:#fff}
+a:focus-visible{outline:3px solid var(--poppy);outline-offset:3px}
+
+/* Header */
+header{background:var(--sand);position:sticky;top:env(safe-area-inset-top,0px);z-index:20;border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:18px;padding-block:14px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--teal);font-family:var(--display);font-size:24px}
+.links{display:flex;gap:28px}
+.links a{text-decoration:none;color:var(--muted);font-size:17px}
+.links a:hover{color:var(--teal)}
+.actions{display:flex;gap:10px}
+.actions .pill{padding:8px 18px;font-size:16px}
+@media (max-width:900px){.links{display:none}}
+@media (max-width:480px){.actions .pill-line{display:none}}
+
+/* Hero */
+.hero{background:var(--teal);color:#fff;padding-block:96px 104px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%, rgba(255,255,255,.08), transparent 60%)}
+.hero .trail{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.55}
+.hero .wrap{position:relative}
+.hero h1{font-size:clamp(42px,7vw,78px);max-width:14ch;margin:0 auto}
+.hero h1 em{font-style:normal;color:var(--poppy)}
+.hero p{color:#d3dfe2;max-width:58ch;margin:26px auto 0;font-size:clamp(19px,2.2vw,21px)}
+.hero .ctas{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-top:34px}
+
+/* Terms strip */
+.strip{background:var(--sage);padding-block:14px}
+.strip-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.chip{background:var(--teal);color:#fff;border-radius:16px;padding:18px 22px;display:flex;align-items:center;gap:14px}
+.chip b{font-family:var(--display);font-weight:400;font-size:30px;color:var(--poppy);line-height:1}
+.chip span{font-size:17px;color:#d3dfe2;line-height:1.3}
+@media (max-width:820px){.strip-grid{grid-template-columns:1fr}}
+
+/* Specialisms */
+.section{padding-block:88px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:44px}
+@media (max-width:980px){.cards{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.cards{grid-template-columns:1fr}.card{min-height:0}.card h3{margin-top:22px}}
+.card{border-radius:20px;padding:26px 24px 24px;min-height:250px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;color:#fff}
+.card:nth-child(odd){background:var(--teal)}
+.card:nth-child(even){background:var(--sage-ink)}
+.card .ico{width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.12);display:grid;place-items:center}
+.card h3{font-size:25px;margin-top:40px}
+.card p{font-size:16.5px;color:rgba(255,255,255,.78);margin-top:10px;line-height:1.4}
+.card::after{content:"";position:absolute;right:-30px;top:-30px;width:130px;height:130px;border:2px dashed rgba(238,155,69,.35);border-radius:50%}
+
+/* Employers */
+.two{display:grid;grid-template-columns:1fr 1.15fr;gap:64px;align-items:start}
+.two>*{min-width:0}
+@media (max-width:880px){.two{grid-template-columns:1fr;gap:30px}}
+.two h2{text-align:left}
+.two .lede{margin-left:0}
+.ticks{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:10px}
+.ticks li{display:flex;gap:12px;align-items:flex-start;color:var(--text)}
+.ticks li::before{content:"";flex:none;width:22px;height:22px;margin-top:3px;border-radius:50%;background:var(--sage) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='%231E3A44' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat}
+.steps{list-style:none;margin:0;padding:0;counter-reset:s;display:grid;gap:14px}
+.steps li{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 24px;display:grid;grid-template-columns:48px 1fr;gap:16px}
+.steps li::before{counter-increment:s;content:counter(s);font-family:var(--display);font-size:22px;width:42px;height:42px;border-radius:50%;background:var(--poppy);color:var(--teal);display:grid;place-items:center}
+.steps h3{font-size:22px;color:var(--teal)}
+.steps p{color:var(--muted);font-size:17.5px;margin-top:4px}
+
+/* Why band */
+.why{background:var(--teal-2);color:#fff;position:relative;overflow:hidden}
+.why .trail{position:absolute;inset:0;width:100%;height:100%;opacity:.35;pointer-events:none}
+.why .wrap{position:relative}
+.why h2{color:#fff;font-size:clamp(38px,6vw,68px);max-width:12ch}
+.why h2 em{font-style:normal;color:var(--poppy)}
+.why-top{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:end}
+.why-top p{color:#d3dfe2}
+@media (max-width:880px){.why-top{grid-template-columns:1fr}}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:56px;border-top:1px solid rgba(255,255,255,.18)}
+.why-grid div{padding:26px 26px 0 0}
+.why-grid div+div{padding-left:26px;border-left:1px solid rgba(255,255,255,.18)}
+.why-grid h3{color:var(--poppy)}
+.why-grid p{color:#d3dfe2;font-size:17.5px;margin-top:8px}
+@media (max-width:880px){.why-grid{grid-template-columns:1fr}.why-grid div+div{padding-left:0;border-left:0;border-top:1px solid rgba(255,255,255,.18)}.why-grid div{padding-bottom:22px}}
+
+/* Candidates */
+.cand{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:44px;display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:center}
+@media (max-width:820px){.cand{grid-template-columns:1fr;padding:28px}}
+.cand h2{text-align:left}
+.cand .lede{margin-left:0}
+.cand .box{background:var(--sand-2);border-radius:18px;padding:28px;text-align:center}
+.cand .box p{margin-bottom:18px}
+
+/* About */
+.about{display:grid;grid-template-columns:240px 1fr;gap:48px;align-items:center}
+@media (max-width:700px){.about{grid-template-columns:1fr;gap:22px}}
+.photo{width:240px;max-width:100%;aspect-ratio:1;border-radius:24px;background:var(--sage);display:grid;place-items:center;font-family:var(--display);font-size:64px;color:var(--teal)}
+.about h2{text-align:left}
+.about .role{color:var(--poppy-ink);font-weight:700;margin-top:8px}
+.about p.body{color:var(--muted);margin-top:14px;max-width:60ch}
+
+/* Contact */
+.contact-card{background:var(--card);border-radius:28px;padding:56px 48px;position:relative;overflow:hidden;border:1px solid var(--line)}
+.contact-card .trail{position:absolute;right:0;top:0;height:100%;width:55%;pointer-events:none}
+.contact-card>*:not(.trail){position:relative}
+.contact-card h2{max-width:14ch}
+.contact-card p{color:var(--muted);max-width:46ch;margin-top:16px}
+.contact-card .mail{display:inline-block;margin-top:26px;font-family:var(--display);font-size:clamp(22px,3.2vw,30px);color:var(--teal);text-decoration:none;border-bottom:3px solid var(--poppy);word-break:break-word}
+.contact-card .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+@media (max-width:640px){.contact-card{padding:32px 24px}.contact-card .trail{opacity:.4;width:100%}}
+
+footer{border-top:1px solid var(--line);padding-block:26px;color:var(--muted);font-size:15px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:center}
+footer nav{display:flex;gap:22px}
+footer a{text-decoration:none}
+footer a:hover{color:var(--teal)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.pill{transition:none}.pill:hover{transform:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="HoundPoint Search home">
+      <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="16" fill="#1E3A44"/><path d="M10 21 L16 10 L22 21 Z" fill="#EE9B45"/></svg>
+      HoundPoint
+    </a>
+    <nav class="links" aria-label="Main">
+      <a href="#roles">Who we place</a>
+      <a href="#employers">For employers</a>
+      <a href="#candidates">For candidates</a>
+      <a href="#about">About</a>
+    </nav>
+    <div class="actions">
+      <a class="pill pill-line" href="#candidates">Find a role</a>
+      <a class="pill pill-fill" href="#contact">Hire with us</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero center">
+    <svg class="trail" viewBox="0 0 1200 600" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M-20 520 C 180 420, 260 560, 420 470 S 640 300, 760 360 S 980 420, 1060 250 S 1180 120, 1240 90" fill="none" stroke="#EE9B45" stroke-width="2.5" stroke-dasharray="2 14" stroke-linecap="round"/>
+      <circle cx="1060" cy="250" r="6" fill="#EE9B45"/>
+    </svg>
+    <div class="wrap">
+      <h1>We find the data talent <em>others miss.</em></h1>
+      <p>HoundPoint Search places early-career data analysts, data scientists, data engineers and machine learning engineers with startups and scale-ups across California. You pay nothing unless you hire.</p>
+      <div class="ctas">
+        <a class="pill pill-fill" href="#employers">For employers</a>
+        <a class="pill pill-line-light" href="#candidates">For candidates</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="wrap strip-grid">
+      <div class="chip"><b>$0</b><span>No fee unless you hire</span></div>
+      <div class="chip"><b>1st</b><span>Reduced fee on your first hire with us</span></div>
+      <div class="chip"><b>90</b><span>Day replacement guarantee on every placement</span></div>
+    </div>
+  </div>
+
+  <section class="section center" id="roles">
+    <div class="wrap">
+      <h2>Who we place</h2>
+      <p class="lede">One specialism, done properly. Strong new graduates through to people with four years of experience, for venture-backed companies anywhere in California.</p>
+      <div class="cards" style="text-align:left">
+        <div class="card"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EE9B45" stroke-width="2" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div><div><h3>Data analytics</h3><p>Data analysts, product analysts and business intelligence analysts.</p></div></div>
+        <div class="card"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EE9B45" stroke-width="2" stroke-linecap="round"><circle cx="6" cy="17" r="2"/><circle cx="12" cy="8" r="2"/><circle cx="18" cy="13" r="2"/><path d="M4 21l16-16"/></svg></div><div><h3>Data science</h3><p>Data scientists, decision scientists and experimentation analysts.</p></div></div>
+        <div class="card"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EE9B45" stroke-width="2" stroke-linecap="round"><ellipse cx="12" cy="5" rx="7" ry="2.5"/><path d="M5 5v7c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5V5M5 12v7c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-7"/></svg></div><div><h3>Data engineering</h3><p>Data engineers and analytics engineers.</p></div></div>
+        <div class="card"><div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EE9B45" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="12" r="2"/><path d="M7 6.5l10 5M7 17.5l10-5"/></svg></div><div><h3>Machine learning</h3><p>Machine learning engineers and applied scientists.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="employers" style="padding-top:20px">
+    <div class="wrap two">
+      <div>
+        <h2>A shortlist judged by someone who knows the work</h2>
+        <p class="lede">Most recruiters match keywords on a resume. We assess data and machine learning candidates on the skills your role needs, so everyone you meet is worth your time.</p>
+        <ul class="ticks">
+          <li>We learn the role properly before we search</li>
+          <li>We handle the process from first call to start date</li>
+          <li>We tell candidates the truth about the opportunity</li>
+          <li>We only put forward people we would hire ourselves</li>
+        </ul>
+        <div style="margin-top:30px"><a class="pill pill-fill" href="#contact">Start a search</a></div>
+      </div>
+      <ol class="steps">
+        <li><div><h3>Brief</h3><p>A short call to understand the role, the team and what good looks like.</p></div></li>
+        <li><div><h3>Search</h3><p>We go beyond job boards, using university networks and data to find candidates others miss.</p></div></li>
+        <li><div><h3>Shortlist</h3><p>A small set of assessed candidates, each with a clear note on their skills and fit.</p></div></li>
+        <li><div><h3>Hire</h3><p>You only pay once your new hire starts, and every placement carries our 90-day guarantee.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section why">
+    <svg class="trail" viewBox="0 0 1200 600" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M1240 560 C 1040 470, 980 300, 820 330 S 560 470, 420 300 S 180 120, -20 160" fill="none" stroke="#9FBCAE" stroke-width="2.5" stroke-dasharray="2 14" stroke-linecap="round"/>
+    </svg>
+    <div class="wrap">
+      <div class="why-top">
+        <h2>Built for <em>data</em> hiring.</h2>
+        <p>Data and machine learning roles are hard to assess from a resume. A focused specialist recruiter who understands the work saves your team hours of interviews that go nowhere.</p>
+      </div>
+      <div class="why-grid">
+        <div><h3>Technical judgment</h3><p>Founded by a business analytics graduate who understands SQL, Python, statistics and machine learning.</p></div>
+        <div><h3>Close to early talent</h3><p>A UCLA and UC San Diego alumnus based in San Luis Obispo, close to California's university talent.</p></div>
+        <div><h3>Focused and personal</h3><p>One specialism and a small number of searches at a time, so every client gets real attention.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="candidates">
+    <div class="wrap">
+      <div class="cand">
+        <div>
+          <h2>For candidates, always free</h2>
+          <p class="lede">Early in a career in data or machine learning and ready for a growing California company? We'd like to hear from you.</p>
+          <ul class="ticks">
+            <li>Roles at startups and scale-ups across California</li>
+            <li>Honest feedback and help preparing for interviews</li>
+            <li>Your details are never shared without your permission</li>
+          </ul>
+        </div>
+        <div class="box">
+          <p>Send your resume and a line about the kind of role you want.</p>
+          <a class="pill pill-fill" href="mailto:aidan@houndpointsearch.com?subject=Candidate%20introduction">Email your resume</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="about" style="padding-top:8px">
+    <div class="wrap about">
+      <div class="photo" role="img" aria-label="Photo of Aidan Teeger to come">AT</div>
+      <div>
+        <h2>Aidan Teeger</h2>
+        <p class="role">Founder, HoundPoint Search</p>
+        <p class="body">Aidan founded HoundPoint Search to connect talented early-career data people with the startups that need them. He holds an MS in Business Analytics from the Rady School of Management at UC San Diego and a BA from UCLA, and brings an analyst's eye to every search.</p>
+        <p class="body">HoundPoint Search is based in San Luis Obispo and works with employers across California.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact" style="padding-top:8px">
+    <div class="wrap">
+      <div class="contact-card">
+        <svg class="trail" viewBox="0 0 600 400" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M620 380 C 520 330, 540 220, 440 210 S 300 120, 330 20" fill="none" stroke="#EE9B45" stroke-width="3" stroke-dasharray="2 14" stroke-linecap="round" opacity=".7"/>
+          <circle cx="330" cy="22" r="7" fill="#EE9B45"/>
+        </svg>
+        <h2>Tell us who you're looking for</h2>
+        <p>Share a little about the role and we'll come back to you within one business day.</p>
+        <a class="mail" href="mailto:aidan@houndpointsearch.com">aidan@houndpointsearch.com</a>
+        <div class="ctas">
+          <a class="pill pill-fill" href="mailto:aidan@houndpointsearch.com?subject=Hiring%20enquiry">Start a search</a>
+          <a class="pill pill-line" href="mailto:aidan@houndpointsearch.com?subject=Candidate%20introduction">Find a role</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 HoundPoint Search LLC · San Luis Obispo, California</span>
+    <nav aria-label="Footer">
+      <a href="#employers">Employers</a>
+      <a href="#candidates">Candidates</a>
+      <a href="#about">About</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>
